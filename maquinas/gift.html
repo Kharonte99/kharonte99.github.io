@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300&display=swap" rel="stylesheet">
+   
+    <title>Kharonte99</title>
+</head>
+
+<body>
+    <img src="/images/logo-hmv.png" >
+    <h1>Gift</h1>
+    <h3>HackMyVM</h3>
+    <p>Antes de nada decir que esta es mi primer WriteUP de un CTF y bueno tengo esto como resumen para mi mimos si por lo que sea esto lo ve alguien y le sirve pues nada, gracias :D</p>
+
+
+    <h3>Reconocimiento</h3>
+    <h5>NetDiscover</h5>
+    <p>Lo primero que haremos es ver que IP tiene la máquina, para ello hay muchas herramientas o incluso las puedes hacer tu mismo pero nosotros usaremos NetDiscover o podemos usar también arp-scan.</p>
+    <br>
+    <img src="/images/gift/gift-reconocimiento.png">
+    <p>En mi caso tiene la 10.0.2.8.(Estoy con el entorno desplagado en VirtualBox en Red NAT)</p>
+    <h5>Nmap</h5>
+    <p>Ahora seguimos por el paso más lógico, escanear la maquina con Nmap, podemos ver que tiene los puertos 22 y 80 abiertos corresponden al servicio SSH y al WEB </p>
+    <img src="/images/gift/gift-nmap.png">
+    <h3>Exploración</h3>
+    <p>Ahora vamos de excursión por la página web a ver si encontramos algo pero vemos una web simpe pidiéndonos que no pensemos de mas y al inspeccionar la máquina (Ctrl+U) vemos un comentario similar(Es más fácil de lo que creemos o eso nos dice.)</p>
+    <img src="/images/gift/gift-web1.png">
+    <img src="/images/gift/gift-web2.png">
+    <p> Si seguimos podemos tirar por Gobuster, Dirb, Dirbuster (Vamos a fuzzear la web buscando directorios para poder ver algún vector de ataque por aquí.)</p>
+    <img src="/images/gift/gift-fuzz.png">
+    <p>Nosotros con gobuster le indicamos la URL el diccionario que vamos a usar para listar esos directorios y con el parámetro -x le indicamos que busque por extensión PHP HTML y TXT</p>
+    <p>Seguimos sin encontrar nada por parte de la página web podríamos usar Nikto u otro buscador de vulnerabilidades web pero vamos  ver si por el SSH podemos sacar algo</p>
+    <h3>Explotación</h3>
+    <h5>Hydra</h5>
+    <p>En mi caso estuve pensando en que si nos han avisado que no es difícil podemos probar por SSH para hacer fuerza bruta, yo cometí el error de intentar adivinar tanto Usuario y Password por diccionario y no me di cuenta en probar directamente con el usuario root, pero no pasa nada probamos con lo siguiente y ahí tenemos la contraseña del usuario root en SSH. (Usando el diccionario rockyou.txt que es el más común en CTF)</p>
+    <img src="/images/gift/gift-hydra.png">
+    <p>hydra -l root -P /usr/share/wordlists/rockyou.txt 10.0.2.8 ssh</p>
+    <p>Indicamos  el login como root la wordlist de rockyou e indicamos la IP y el protocolo</p>
+    <h3>Fin</h3>    
+    <p>Ahora podemos conectarnos por SSH con la clave proporcionada y en el mismo directorio tenemos las dos flags, la verdad que una maquina muy sencilla pero muy buena para alguien que está empezando como yo. </p>
+    <img src="/images/gift/gift-flags.png">
+    <p>Gracias si has llegado hasta aquí. Happy Hack :D</p>
+
+
+</body>
+
+
+
+</html>

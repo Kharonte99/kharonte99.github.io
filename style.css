@@ -1,0 +1,17 @@
+header{
+    text-align: center;
+    
+}
+
+body{
+    background-color: rgba(22, 88, 220, 0.324);
+    margin: auto;
+    padding: 2cm;
+    font-family: 'Martian Mono', monospace;
+}
+
+p{
+    text-align: left;
+}
+
+
