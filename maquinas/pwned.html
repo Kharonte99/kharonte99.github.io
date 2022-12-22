@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300&display=swap" rel="stylesheet">
+    
+        <title>Pwned-Kharonte</title>
+    </head>
+
+    <body>
+        <img src="/images/logo-hmv.png" >
+        <h1>Pwned</h1>
+        <h2>HackMyVM</h2>
+        <p>Segunda resolución esta vez de la maquina Pwned</p>
+
+        <h3>Reconocimiento</h3>
+            <h5>NetDiscover</h5>
+                <p>Bueno como siempre usaremos Netdiscover para obtener la IP de la maquina victima en este caso la 10.0.2.9:</p>
+                <img src="/images/pwned/pwned-net.png">
+            <h5>Nmap</h5>
+                <p>Y como es habitual y el siguiente paso lógico, vamos a escanear todos los puertos de la maquina:</p>
+                <p>Normalmente suelo hacer un escaneo simple y después voy viendo si es necesario buscar otras cosillas y añadirle el -sC o -sV como en este caso para ver la versión del servicio que esté operando en cada puerto </p>
+                <p>Observamos el puerto 21,22 y 80 abiertos</p>
+                <img src="/images/pwned/pwned-recon.png">
+        <h3>Exploración</h3>
+        <p>Accedemos con el navegador a la página web y vemos una web simple, mirando el codigo no encontramos nada relevante solo un comentario, pero no es relevante</p>
+        <img src="/images/pwned/pwned-web.png">
+        <p>Luego mire robots.txt una cosa que suelo hacer y a veces encontramos cositas como en este caso, encontramos /nothing accesible y una vez dentro no sale un archivo HTML, como poca cosa :</p>
+        <img src="/images/pwned/pwned-robots.png" alt="">
+        <h5>GoBuster</h5>
+        <p>Al no encontrar nada procedemos con gobuster a ver si encontramos algo:</p>
+        <img src="/images/pwned/pwned-fuzz.png">
+        <p>Encontramos el directorio /hidden_text</p>
+        <p> Y si entramos vemos un diccionario:</p>
+        <img src="/images/pwned/pwned-dic.png">
+        <img src="/images/pwned/pwned-dic2.png">
+        <p>Asique lo pasamos a un txt y probamos con gobuster de nuevo y encontramos el siguiente sitio.</p>
+        <img src="/images/pwned/pwned-fuzz2.png">
+        <img src="/images/pwned/pwned-vuln.png">
+        <img src="/images/pwned/pwned-vuln2.png">
+        <h3>Explotación</h3>
+        <p>Probamos con las credenciales que están en el comentario  a través de FTP</p>
+        <img src="/images/pwned/pwned-ftp.png">
+        <p>Una vez dentro del FTP buscamos a ver que encontramos (Era de las primeras veces que usaba comandos FTP por eso el error del comando cat): </p>
+        <img src="/images/pwned/pwned-ftp2.png">
+        <p>Vemos como tenemos varias cuentas de usuario y ficheros miramos donde podemos entrar, descargamos todo y recopilamos la información</p>
+        <img src="/images/pwned/pwned-msg.png">
+        <p>Y de momento nos metemos como el usuario Ariana con el id_rsa esto lo deduje por el nombre Ariana en la nota </p>         
+        <img src="/images/pwned/pwned-user.png">
+        <p>Una vez dentro tenemos la flag del usuario. </p>
+        <h3>Escalación de privilegios</h3>
+        <p>Primero debemos hacer una escalada horizontal hacia Serena y después hacia root. Para eso volvamos para ver el script en bash llamado messenger.sh</p>
+        <img src="/images/pwned/pwned-script.png">
+        <p>Vemos que lo que está en la variable msg se ejecuta como el usuario Selena, pues simplemente ponemos /bin/bash para que nos entregue una shell  con dicho usuario</p>
+        <img src="/images/pwned/pwned-user2.txt.png">
+        <p>Por último checkeamos permisos, SUID y grupos del usuario par aver posibles vectores para escalar en este caso vemos que pertenece a el grupo docker</p>
+        <img src="/images/pwned/pwned-root.png">
+        <p>Buscando en <a target="_blank" href="https://gtfobins.github.io/gtfobins/docker/">GTFOBins</a> por Docker encontramos una manera fácil de escalar y ya estaría la maquina comprometida</p>
+        <h3>Fin</h3>    
+        
+
+    </body>
+
+
+    <footer>SIEMPRE HAY OTRO SECRETO</footer>
+
+</html>
