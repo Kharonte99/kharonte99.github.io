@@ -5,8 +5,6 @@ categories: [Ciberseguridad]
 tags: [ciberseguridad,hacking,linux,redes,cursos,formacion]
 ---
 
-# Intro
-
 Si quieres saber cómo empezar en ciberseguridad, estás en el lugar adecuado. 
 Vamos a ver las bases necesarias para poder dar los primeros pasos en este mundo.
 
